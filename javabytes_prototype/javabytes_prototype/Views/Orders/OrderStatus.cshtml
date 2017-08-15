@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "OrderStatus";
+}
+
+<h2>OrderStatus</h2>
+
+<body onload="load()">
+    <h3>Thanks for your order. Your order number is 1234 - make sure to give this to your barista when you go to collect your order.</h3>
+    
+    <div class="row">
+        <div id="1" class="col-xs-1" style="height:30px;width:30px;border-radius:15px;background:red"></div>
+        <div class="col-xs-11"><text id="text1">Awaiting payment confirmation</text></div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div id="2" class="col-xs-1" style="height:30px;width:30px;border-radius:15px;background:red"></div>
+        <div class="col-xs-11"><text id="text2">Order being prepared</text></div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div id="3" class="col-xs-1" style="height:30px;width:30px;border-radius:15px;background:red"></div>
+        <div class="col-xs-11"><text id="text3">Awaiting order collection</text></div>
+    </div>
+    <br />
+
+    <div id="orderComplete" style="display:none">
+        <h2 style="align-content:center">Order Complete!</h2>
+        <h4 style="align-content:center">Thank you for using JavaBytes.</h4>
+    </div>
+</body>
+
+<script>
+    function load() {
+        setTimeout(function () {
+            document.getElementById("1").style.background = 'green';
+            document.getElementById("text1").innerHTML = "Payment successful";
+        }, 5000);
+        setTimeout(function () {
+            document.getElementById("2").style.background = 'green';
+            document.getElementById("text2").innerHTML = "Order ready for collection";
+        }, 15000);
+        setTimeout(function () {
+            document.getElementById("3").style.background = 'green';
+            document.getElementById("text3").innerHTML = "Order collected";
+            document.getElementById("orderComplete").style.display = 'block';
+        }, 25000);
+    }
+</script>
+

@@ -1,0 +1,89 @@
+﻿@model javabytes_prototype.Models.Vendor
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>@Model.name</h2>
+
+<div class="row">
+    <div class="col-xs-7">
+        @foreach (javabytes_prototype.Models.Product p in Model.Products)
+        {
+            <button id="product_@(p.product_id)" class="btn btn-default" onclick="showOptions('section_@(p.product_id)')">@(p.name + " (R" + p.price.ToString() + ")")</button>
+            <br />
+            <div id="section_@(p.product_id)" style="display:none">
+                @foreach (javabytes_prototype.Models.Product_Option_Link pl in p.Product_Option_Link)
+                {
+                    <label for="@pl.product_option_id">@(pl.Product_Option.name + " (" + "+" + pl.Product_Option.extra_price.ToString() + ")")</label>
+                    <input type="checkbox" value="@(pl.Product_Option.name + " (" + "+" + pl.Product_Option.extra_price.ToString() + ")")" name="@pl.Product_Option.name" id="@pl.product_option_id" />
+                    <br />
+                }
+                <button onclick="addToCart('section_@(p.product_id)', '@p.name', @p.price)">Add to Cart</button>
+            </div>
+            <br />
+            <br />
+        }
+    </div>
+    <div class="col-xs-offset-2 col-xs-3" style="height:100%">
+        Your Order:
+        <textarea id="receipt" style="width:100%;height:200px"></textarea>
+        @* The order being passed through to the method will need to be included at a later stage *@
+        @Html.ActionLink("Checkout", "Checkout", "Orders", new { order = "" }, new { @class = "btn btn-primary", @style = "color:white" })
+    </div>
+</div>
+
+<script>
+    var last = null;
+    function showOptions(name) {
+        if (last != null) {
+            last.style.display = 'none';
+        }
+
+        var section = document.getElementById(name);
+        if (last != section) {
+            section.style.display = 'block';
+        }
+        else {
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            }
+            else {
+                section.style.display = 'none';
+            }
+        }
+        last = section;
+    }
+
+    var total = 0;
+    function addToCart(divID, prodName, basePrice) {
+        var currentItemPrice = basePrice;
+        total += basePrice;
+
+        var selected = [];
+        var prodIDs = [];
+        $('#' + divID + ' input:checked').each(function () {
+            var add = "+" + $(this).attr('value');
+
+            var init = add.indexOf('(');
+            var fin = add.indexOf(')');
+            var addPrice = add.substr(init + 1, fin - init - 1);
+            addPrice = addPrice.replace("+", "");
+            total += parseInt(addPrice);
+            currentItemPrice += parseInt(addPrice);
+
+            add = add.replace(/\(.*?\)/g, '');
+            selected.push(add);
+        });
+
+        var current = document.getElementById('receipt').value;
+        var lastLine = current.lastIndexOf("\n");
+        current = current.substring(0, lastLine + 1);
+        if (selected.length != 0) {
+            document.getElementById('receipt').value = current + prodName + "\n" + selected.join("\n") + "\n" + currentItemPrice + "\n" + "\n" + "TOTAL: " + total;
+        }
+        else {
+            document.getElementById('receipt').value = current + prodName + "\n" + currentItemPrice + "\n" + "\n" + "TOTAL: " + total;
+        }
+    }
+</script>

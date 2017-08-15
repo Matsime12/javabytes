@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="javabytesDBModelStoreContainer" CdmEntityContainer="javabytesDBEntities">
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="javabytesDBModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="delivery_collection" ColumnName="delivery_collection" />
+          <ScalarProperty Name="delivery_location" ColumnName="delivery_location" />
+          <ScalarProperty Name="order_status_id" ColumnName="order_status_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Line_Item">
+      <EntityTypeMapping TypeName="javabytesDBModel.Order_Line_Item">
+        <MappingFragment StoreEntitySet="Order_Line_Item">
+          <ScalarProperty Name="order_line_item_id" ColumnName="order_line_item_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Line_Item_Product_Option_Link">
+      <EntityTypeMapping TypeName="javabytesDBModel.Order_Line_Item_Product_Option_Link">
+        <MappingFragment StoreEntitySet="Order_Line_Item_Product_Option_Link">
+          <ScalarProperty Name="order_line_item_product_option_link_id" ColumnName="order_line_item_product_option_link_id" />
+          <ScalarProperty Name="order_line_item_id" ColumnName="order_line_item_id" />
+          <ScalarProperty Name="product_option_id" ColumnName="product_option_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Status">
+      <EntityTypeMapping TypeName="javabytesDBModel.Order_Status">
+        <MappingFragment StoreEntitySet="Order_Status">
+          <ScalarProperty Name="order_status_id" ColumnName="order_status_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="javabytesDBModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="date_added" ColumnName="date_added" />
+          <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_Option">
+      <EntityTypeMapping TypeName="javabytesDBModel.Product_Option">
+        <MappingFragment StoreEntitySet="Product_Option">
+          <ScalarProperty Name="product_option_id" ColumnName="product_option_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="extra_price" ColumnName="extra_price" />
+          <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_Option_Link">
+      <EntityTypeMapping TypeName="javabytesDBModel.Product_Option_Link">
+        <MappingFragment StoreEntitySet="Product_Option_Link">
+          <ScalarProperty Name="product_option_link_id" ColumnName="product_option_link_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_option_id" ColumnName="product_option_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="javabytesDBModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="preferred_delivery_location" ColumnName="preferred_delivery_location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Type">
+      <EntityTypeMapping TypeName="javabytesDBModel.User_Type">
+        <MappingFragment StoreEntitySet="User_Type">
+          <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vendors">
+      <EntityTypeMapping TypeName="javabytesDBModel.Vendor">
+        <MappingFragment StoreEntitySet="Vendor">
+          <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

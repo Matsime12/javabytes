@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "LoginError";
+}
+
+<h2>Login</h2>
+
+There was a problem logging in. Please check your login details and try again.
+
+Username
+<input id="username" />
+
+Password
+<input id="password" />
+
+<button onclick="Login()">Login</button>
+
+<script>
+    function Login()
+    {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var url = '@Url.Action("Login", "Users")';
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { username: username, password: password },
+            success: function (data) {
+                if (data) {
+                    alert('true');
+                    window.location.href='@Url.Action("Index", "Home")';
+                }
+                else {
+                    alert('false');
+                     window.location.href='@Url.Action("LoginErrorView", "Users")';
+                }
+            },
+            error: function () {
+                alert(errorThrown);
+            }
+        });
+     }
+</script>

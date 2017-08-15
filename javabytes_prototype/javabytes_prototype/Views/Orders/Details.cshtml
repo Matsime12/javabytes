@@ -1,0 +1,74 @@
+﻿@model javabytes_prototype.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.delivery_collection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.delivery_collection)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.delivery_location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.delivery_location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order_Status.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order_Status.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vendor.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendor.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.order_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

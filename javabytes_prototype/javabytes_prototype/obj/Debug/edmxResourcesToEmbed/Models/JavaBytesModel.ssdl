@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="javabytesDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" />
+    <Property Name="total" Type="float" />
+    <Property Name="delivery_collection" Type="int" />
+    <Property Name="delivery_location" Type="nvarchar(max)" />
+    <Property Name="order_status_id" Type="int" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="vendor_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Order_Line_Item">
+    <Key>
+      <PropertyRef Name="order_line_item_id" />
+    </Key>
+    <Property Name="order_line_item_id" Type="int" Nullable="false" />
+    <Property Name="order_id" Type="int" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="price" Type="float" />
+    <Property Name="quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="Order_Line_Item_Product_Option_Link">
+    <Key>
+      <PropertyRef Name="order_line_item_product_option_link_id" />
+    </Key>
+    <Property Name="order_line_item_product_option_link_id" Type="int" Nullable="false" />
+    <Property Name="order_line_item_id" Type="int" />
+    <Property Name="product_option_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Order_Status">
+    <Key>
+      <PropertyRef Name="order_status_id" />
+    </Key>
+    <Property Name="order_status_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="price" Type="float" />
+    <Property Name="date_added" Type="datetime" />
+    <Property Name="vendor_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Product_Option">
+    <Key>
+      <PropertyRef Name="product_option_id" />
+    </Key>
+    <Property Name="product_option_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="extra_price" Type="float" />
+    <Property Name="vendor_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Product_Option_Link">
+    <Key>
+      <PropertyRef Name="product_option_link_id" />
+    </Key>
+    <Property Name="product_option_link_id" Type="int" Nullable="false" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="product_option_id" Type="int" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="surname" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_type_id" Type="int" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="preferred_delivery_location" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="User_Type">
+    <Key>
+      <PropertyRef Name="user_type_id" />
+    </Key>
+    <Property Name="user_type_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Vendor">
+    <Key>
+      <PropertyRef Name="vendor_id" />
+    </Key>
+    <Property Name="vendor_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="description" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_Order_Line_Item_Product_Option_Link_To_Order_Line_Item">
+    <End Role="Order_Line_Item" Type="Self.Order_Line_Item" Multiplicity="0..1" />
+    <End Role="Order_Line_Item_Product_Option_Link" Type="Self.Order_Line_Item_Product_Option_Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order_Line_Item">
+        <PropertyRef Name="order_line_item_id" />
+      </Principal>
+      <Dependent Role="Order_Line_Item_Product_Option_Link">
+        <PropertyRef Name="order_line_item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Line_Item_Product_Option_Link_To_Product_Option">
+    <End Role="Product_Option" Type="Self.Product_Option" Multiplicity="0..1" />
+    <End Role="Order_Line_Item_Product_Option_Link" Type="Self.Order_Line_Item_Product_Option_Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product_Option">
+        <PropertyRef Name="product_option_id" />
+      </Principal>
+      <Dependent Role="Order_Line_Item_Product_Option_Link">
+        <PropertyRef Name="product_option_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Line_Item_To_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Order_Line_Item" Type="Self.Order_Line_Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="Order_Line_Item">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Line_Item_To_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="Order_Line_Item" Type="Self.Order_Line_Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Order_Line_Item">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_To_Order_Status">
+    <End Role="Order_Status" Type="Self.Order_Status" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order_Status">
+        <PropertyRef Name="order_status_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="order_status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_To_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_To_Vendor">
+    <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="vendor_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="vendor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Option_Link_To_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="Product_Option_Link" Type="Self.Product_Option_Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Product_Option_Link">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Option_Link_To_Product_Option">
+    <End Role="Product_Option" Type="Self.Product_Option" Multiplicity="0..1" />
+    <End Role="Product_Option_Link" Type="Self.Product_Option_Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product_Option">
+        <PropertyRef Name="product_option_id" />
+      </Principal>
+      <Dependent Role="Product_Option_Link">
+        <PropertyRef Name="product_option_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Option_To_Vendor">
+    <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1" />
+    <End Role="Product_Option" Type="Self.Product_Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="vendor_id" />
+      </Principal>
+      <Dependent Role="Product_Option">
+        <PropertyRef Name="vendor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_To_Vendor">
+    <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="vendor_id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="vendor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_To_UserType">
+    <End Role="User_Type" Type="Self.User_Type" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_Type">
+        <PropertyRef Name="user_type_id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="user_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="javabytesDBModelStoreContainer">
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order_Line_Item" EntityType="Self.Order_Line_Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order_Line_Item_Product_Option_Link" EntityType="Self.Order_Line_Item_Product_Option_Link" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order_Status" EntityType="Self.Order_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product_Option" EntityType="Self.Product_Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product_Option_Link" EntityType="Self.Product_Option_Link" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Type" EntityType="Self.User_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Order_Line_Item_Product_Option_Link_To_Order_Line_Item" Association="Self.FK_Order_Line_Item_Product_Option_Link_To_Order_Line_Item">
+      <End Role="Order_Line_Item" EntitySet="Order_Line_Item" />
+      <End Role="Order_Line_Item_Product_Option_Link" EntitySet="Order_Line_Item_Product_Option_Link" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Line_Item_Product_Option_Link_To_Product_Option" Association="Self.FK_Order_Line_Item_Product_Option_Link_To_Product_Option">
+      <End Role="Product_Option" EntitySet="Product_Option" />
+      <End Role="Order_Line_Item_Product_Option_Link" EntitySet="Order_Line_Item_Product_Option_Link" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Line_Item_To_Order" Association="Self.FK_Order_Line_Item_To_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="Order_Line_Item" EntitySet="Order_Line_Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Line_Item_To_Product" Association="Self.FK_Order_Line_Item_To_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Order_Line_Item" EntitySet="Order_Line_Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_To_Order_Status" Association="Self.FK_Order_To_Order_Status">
+      <End Role="Order_Status" EntitySet="Order_Status" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_To_User" Association="Self.FK_Order_To_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_To_Vendor" Association="Self.FK_Order_To_Vendor">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Option_Link_To_Product" Association="Self.FK_Product_Option_Link_To_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Product_Option_Link" EntitySet="Product_Option_Link" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Option_Link_To_Product_Option" Association="Self.FK_Product_Option_Link_To_Product_Option">
+      <End Role="Product_Option" EntitySet="Product_Option" />
+      <End Role="Product_Option_Link" EntitySet="Product_Option_Link" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Option_To_Vendor" Association="Self.FK_Product_Option_To_Vendor">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="Product_Option" EntitySet="Product_Option" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_To_Vendor" Association="Self.FK_Product_To_Vendor">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_To_UserType" Association="Self.FK_User_To_UserType">
+      <End Role="User_Type" EntitySet="User_Type" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

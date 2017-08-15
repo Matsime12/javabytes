@@ -1,0 +1,69 @@
+﻿@model IEnumerable<javabytes_prototype.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.delivery_collection)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.delivery_location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Status.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vendor.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.delivery_collection)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.delivery_location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Status.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vendor.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.order_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.order_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.order_id })
+        </td>
+    </tr>
+}
+
+</table>
