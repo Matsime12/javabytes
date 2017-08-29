@@ -7,30 +7,38 @@
 <h2>@Model.name</h2>
 
 <div class="row">
-    <div class="col-xs-7">
-        @foreach (javabytes_prototype.Models.Product p in Model.Products)
-        {
-            <button id="product_@(p.product_id)" class="btn btn-default" onclick="showOptions('section_@(p.product_id)')">@(p.name + " (R" + p.price.ToString() + ")")</button>
-            <br />
-            <div id="section_@(p.product_id)" style="display:none">
-                @foreach (javabytes_prototype.Models.Product_Option_Link pl in p.Product_Option_Link)
+    <div class="col-md-4" style="background-color:grey;">
+        <div style="height:100%">
+            @foreach (javabytes_prototype.Models.Product p in Model.Products)
+            {
+                <button id="product_@(p.product_id)" class="btn btn-default" onclick="showOptions('section_@(p.product_id)')">@(p.name + " (R" + p.price.ToString() + ")")</button>
+                <br />
+                <div id="section_@(p.product_id)" style="display:none">
+                    @foreach (javabytes_prototype.Models.Product_Option_Link pl in p.Product_Option_Link)
                 {
-                    <label for="@pl.product_option_id">@(pl.Product_Option.name + " (" + "+" + pl.Product_Option.extra_price.ToString() + ")")</label>
-                    <input type="checkbox" value="@(pl.Product_Option.name + " (" + "+" + pl.Product_Option.extra_price.ToString() + ")")" name="@pl.Product_Option.name" id="@pl.product_option_id" />
-                    <br />
-                }
-                <button onclick="addToCart('section_@(p.product_id)', '@p.name', @p.price)">Add to Cart</button>
-            </div>
-            <br />
-            <br />
-        }
+                        <label for="@pl.product_option_id">@(pl.Product_Option.name + " (" + "+" + pl.Product_Option.extra_price.ToString() + ")")</label>
+                        <input type="checkbox" value="@(pl.Product_Option.name + " (" + "+" + pl.Product_Option.extra_price.ToString() + ")")" name="@pl.Product_Option.name" id="@pl.product_option_id" />
+                        <br />
+                    }
+                    <button onclick="addToCart('section_@(p.product_id)', '@p.name', @p.price)">Add to Cart</button>
+                </div>
+                <br />
+                <br />
+            }
+        </div>
     </div>
-    <div class="col-xs-offset-2 col-xs-3" style="height:100%">
-        Your Order:
-        <textarea id="receipt" style="width:100%;height:200px"></textarea>
-        @* The order being passed through to the method will need to be included at a later stage *@
-        @Html.ActionLink("Checkout", "Checkout", "Orders", new { order = "" }, new { @class = "btn btn-primary", @style = "color:white" })
+    <div class="col-md-2" style="background-color:white;">
+
     </div>
+    <div class="col-md-4" style="background-color:grey;">
+        <div  style="height:100%">
+            Your Order:
+            <textarea id="receipt" style="width:100%;height:200px"></textarea>
+            @* The order being passed through to the method will need to be included at a later stage *@
+            @Html.ActionLink("Checkout", "Checkout", "Orders", new { order = "" }, new { @class = "btn btn-primary", @style = "color:white" })
+        </div>
+    </div>
+
 </div>
 
 <script>

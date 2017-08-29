@@ -240,9 +240,9 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\logo\buzz.png" />
-    <Content Include="Content\Images\logo\gabbiano.png" />
-    <Content Include="Content\Images\logo\vida.png" />
+    <Content Include="Content\Images\logo\buzz.jpg" />
+    <Content Include="Content\Images\logo\gabbiano.jpg" />
+    <Content Include="Content\Images\logo\vida.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

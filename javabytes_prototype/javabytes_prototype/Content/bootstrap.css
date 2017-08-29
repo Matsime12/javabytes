@@ -4931,6 +4931,12 @@ a.list-group-item.active > .badge,
   margin-left: 3px;
 }
 
+.crop-logo {
+ height: 100px;
+ width: 60px;
+ overflow: hidden;
+}
+
 .crop {
  height: 400px;
  width: 400px;
