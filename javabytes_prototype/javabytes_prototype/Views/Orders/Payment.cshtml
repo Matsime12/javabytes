@@ -1,8 +1,10 @@
-﻿
+﻿@model javabytes_prototype.Models.Order
 @{
     ViewBag.Title = "Payment";
 }
 
 <h2>Payment</h2>
 
-@Html.ActionLink("Complete payment", "Payment", "Orders", new { id = 1}, null)
+Please complete payment of @(Model.total) via the below Snapscan code for order no. @(Model.order_id)
+
+@Html.ActionLink("Complete payment", "MakePayment", "Orders", new { id = Model.order_id}, null)

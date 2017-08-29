@@ -15,19 +15,54 @@ namespace javabytes_prototype.Controllers
         private javabytesDBEntities db = new javabytesDBEntities();
 
         //this method will need to recieve something different when actually saving orders in the db
-        public ActionResult Checkout(string[] orders)
+        public void Checkout(string[] products, double total)
         {
-
-            return View("Payment");    
+            Order o = new Order();
+            o.date = DateTime.Now;
+            if (db.Orders.Count() == 0)
+            {
+                o.order_id = 1;
+            }
+            else
+            {
+                o.order_id = db.Orders.Last().order_id + 1;
+            }
+            o.order_status_id = 1;
+            o.total = total;
+            db.Orders.Add(o);
+            foreach (string prodID in products)
+            {
+                Order_Line_Item ol = new Order_Line_Item();
+                ol.order_id = o.order_id;
+                ol.product_id = Convert.ToInt32(prodID);
+                db.Order_Line_Item.Add(ol);
+            }
+            db.SaveChanges();
         }
 
         //this method will receive an order number and check if payment has been made via snapscan
-        public ActionResult Payment(int id)
+        public ActionResult GoToPayment()
         {
-            //Check if payment made
-            //If no - check again (5 times? before saying payment error?)
-            //If yes - redirect to order status page
-            return View("OrderStatus");
+            Order o = db.Orders.OrderByDescending(m => m.order_id).FirstOrDefault();
+            return View("Payment", o);
+        }
+
+        public ActionResult MakePayment(int id)
+        {
+            Order o = db.Orders.Where(m => m.order_id == id).FirstOrDefault();
+            return View("OrderStatus", o);
+        }
+
+        public void PaymentSuccessful(int id)
+        {
+            Order o = db.Orders.Where(m => m.order_id == id).FirstOrDefault();
+            o.order_status_id = 2;
+        }
+
+        public JsonResult CheckOrderStatus(int id)
+        {
+            Order o = db.Orders.Where(m => m.order_id == id).FirstOrDefault();
+            return Json(new { id = o.order_id });
         }
 
         // GET: Orders

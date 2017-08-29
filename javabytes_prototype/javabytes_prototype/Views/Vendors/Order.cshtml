@@ -19,7 +19,7 @@
                     <input type="checkbox" value="@(pl.Product_Option.name + " (" + "+" + pl.Product_Option.extra_price.ToString() + ")")" name="@pl.Product_Option.name" id="@pl.product_option_id" />
                     <br />
                 }
-                <button onclick="addToCart('section_@(p.product_id)', '@p.name', @p.price)">Add to Cart</button>
+                <button onclick="addToCart('@p.product_id', '@p.name', @p.price)">Add to Cart</button>
             </div>
             <br />
             <br />
@@ -28,8 +28,8 @@
     <div class="col-xs-offset-2 col-xs-3" style="height:100%">
         Your Order:
         <textarea id="receipt" style="width:100%;height:200px"></textarea>
-        @* The order being passed through to the method will need to be included at a later stage *@
-        @Html.ActionLink("Checkout", "Checkout", "Orders", new { order = "" }, new { @class = "btn btn-primary", @style = "color:white" })
+        <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+        @*@Html.ActionLink("Checkout", "Checkout", "Orders", new { order = "" }, new { @class = "btn btn-primary", @style = "color:white" })*@
     </div>
 </div>
 
@@ -56,12 +56,14 @@
     }
 
     var total = 0;
-    function addToCart(divID, prodName, basePrice) {
+    var prodIDs = [];
+    function addToCart(prodID, prodName, basePrice) {
+        prodIDs.push(prodID);
+        var divID = 'section_' + prodID;
         var currentItemPrice = basePrice;
         total += basePrice;
 
         var selected = [];
-        var prodIDs = [];
         $('#' + divID + ' input:checked').each(function () {
             var add = "+" + $(this).attr('value');
 
@@ -85,5 +87,19 @@
         else {
             document.getElementById('receipt').value = current + prodName + "\n" + currentItemPrice + "\n" + "\n" + "TOTAL: " + total;
         }
+    }
+
+    var oid = 0;
+    function checkout() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Checkout", "Orders")',
+            traditional: true,
+            data: { products: prodIDs, total: total },
+            dataType: "json",
+            complete: function () {
+                window.location.href = '@Url.Action("GoToPayment","Orders")';
+            }
+        });
     }
 </script>
